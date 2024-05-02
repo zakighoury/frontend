@@ -1,0 +1,234 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  height: 108px;
+}
+.navbar-container {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 45px;
+
+  .ant-menu {
+    background-color: #fff; // Background color for the menu
+    border-bottom: none; // Remove border at the bottom of the menu
+    display: flex;
+    justify-content: center;
+  }
+  .ant-menu-item {
+    padding: 0 15px; // Adjust horizontal padding for menu items
+  }
+  :where(
+      .css-dev-only-do-not-override-mzwlov
+    ).ant-menu-light.ant-menu-horizontal
+    > .ant-menu-item-selected::after,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu.ant-menu-horizontal
+    > .ant-menu-item-selected::after,
+  :where(
+      .css-dev-only-do-not-override-mzwlov
+    ).ant-menu-light.ant-menu-horizontal
+    > .ant-menu-submenu-selected::after,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu.ant-menu-horizontal
+    > .ant-menu-submenu-selected::after {
+    border-bottom-width: 0px;
+    border-bottom-color: none;
+  }
+  :where(
+      .css-dev-only-do-not-override-mzwlov
+    ).ant-menu-light.ant-menu-horizontal
+    > .ant-menu-item-selected::after,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu.ant-menu-horizontal
+    > .ant-menu-item-selected::after,
+  :where(
+      .css-dev-only-do-not-override-mzwlov
+    ).ant-menu-light.ant-menu-horizontal
+    > .ant-menu-submenu-selected::after,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu.ant-menu-horizontal
+    > .ant-menu-submenu-selected::after {
+    border-bottom-width: 0px;
+    border-bottom-color: none;
+  }
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light .ant-menu-item,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu
+    .ant-menu-item,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    .ant-menu-submenu-title,
+  :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+    > .ant-menu
+    .ant-menu-submenu-title {
+    color: none;
+  }
+  :where(.css-dev-only-do-not-override-mzwlov).ant-layout-header {
+    height: 64px;
+    padding: 0 50px;
+    color: rgba(0, 0, 0, 0.88);
+    line-height: 64px;
+    background: white;
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 91.16px;
+      height: 45px;
+      gap: 0px;
+      opacity: 0px;
+      margin-right: 12px; // Add margin between logo and menu items
+    }
+  }
+
+  .search-container {
+    width: 267px;
+    height: 44px;
+    border: 1px solid rgba(246, 246, 246, 1);
+  }
+
+  .icon-container {
+    display: flex;
+
+    gap: 12px;
+    align-items: center;
+
+    .anticon {
+      background-color: rgba(246, 246, 246, 1);
+      display: flex;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      font-size: 18px; // Adjust icon size
+      margin-left: 12px; // Add margin between icons
+      &:hover {
+        background-color: rgba(
+          138,
+          51,
+          253,
+          1
+        ); // Change background color on hover
+      }
+    }
+  }
+}
+
+.menu-container {
+  opacity: 0.6;
+  font-weight: 500;
+  color: rgba(128, 125, 126, 1);
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-submenu-selected,
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-submenu-selected {
+  color: black;
+  // font-family: Causten;
+  font-weight: 700;
+  background-color: transparent;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-btn.ant-btn-icon-only
+  .anticon {
+  font-size: 16px;
+  display: none;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-btn.ant-btn-icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  border-radius: 8px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-input-outlined {
+  background: rgba(246, 246, 246, 1);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  border-color: #d9d9d9;
+}
+.ant-input-search
+  :where(.css-dev-only-do-not-override-mzwlov).ant-input-group
+  .ant-input-affix-wrapper:not(:last-child) {
+  border: none;
+  // background-color: rgba(246, 246, 246, 1);
+  border-start-start-radius: 0px;
+  border-end-start-radius: 0px;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary) {
+  border: none;
+  color: rgba(0, 0, 0, 0.45);
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-input-affix-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 11px;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.login-or-signup-button {
+  display: flex;
+  align-items: center;
+  color: black;
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  border-radius: 8px;
+  width: 140px;
+  height: 46px;
+  padding: 12px 48px 12px 48px;
+  border-radius: 8px;
+}
+.login {
+  // padding: 10px 20px; /* Adjust padding as needed */
+  display: flex;
+  align-items: center;
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  height: auto; /* Let the height adjust automatically based on content */
+  width: 140px;
+  height: 46px;
+  padding: 12px 48px 12px 48px;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgba(138, 51, 253, 1);
+  }
+}
+:where(.css-dev-only-do-not-override-mzwlov) a:hover {
+  color: rgba(138, 51, 253, 1);
+}
+:where(.css-dev-only-do-not-override-mzwlov) a:hover {
+  color:none;
+}
+.login {
+  background-color: rgba(
+    138,
+    51,
+    253,
+    1
+  ); /* Set background color for login button */
+  color: white; /* Set text color for login button */
+}
+
+.login-or-signup-button.signup-button {
+  border: 1px solid black; /* Add black border for signup button */
+}

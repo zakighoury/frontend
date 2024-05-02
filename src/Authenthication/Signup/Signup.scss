@@ -1,0 +1,102 @@
+.signup-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  gap: 70px;
+  // height: 100vh; /* Adjust as needed */
+}
+
+.signup-images {
+  width: 695px;
+  height: 956px;
+}
+.signup-button .ant-btn {
+  width: Fixed (167px) px;
+  height: Hug (54px) px;
+  padding: 16px 20px 16px 20px;
+  gap: 12px;
+  border-radius: 8px 0px 0px 0px;
+}
+.signup-form {
+  width: 568px;
+  height: 697px;
+  top: 171px;
+  left: 772px;
+  gap: 0px;
+  opacity: 0px;
+}
+
+.continue-with-google,
+.continue-with-twitter
+ {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  gap: 8px;
+}
+
+.forgot-password {
+  margin-bottom: 10px;
+}
+
+.dont-have-account {
+  text-align: center;
+
+  .signup-link {
+    margin-left: 5px;
+  }
+}
+.custom-button {
+  width: 167px;
+  height: 54px;
+  padding: 16px 20px 16px 20px;
+  border-radius: 8px;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-btn.ant-btn-block {
+  //  width:  167px ;
+  border: 1px solid black;
+}
+.google {
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+}
+.or {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0; /* Adjust margin as needed */
+
+  &::before,
+  &::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: #000;
+  }
+
+  span {
+    margin: 0 10px; /* Adjust margin around the text as needed */
+    text-transform: uppercase;
+    font-family: Core Sans C;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 17.68px;
+    text-align: left;
+  }
+}
+.signup-heading {
+  width: 218px;
+  height: 33px;
+  font-family: Core Sans C;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 33.39px;
+  letter-spacing: 0.02em;
+  color: rgba(51, 51, 51, 1);
+  text-align: left;
+  margin-bottom: 60px;
+}

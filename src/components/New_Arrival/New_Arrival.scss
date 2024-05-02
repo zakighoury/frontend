@@ -1,0 +1,68 @@
+.new-arrival-container {
+  // Add any container styles here
+}
+.title {
+  width: 100%;
+  height: 70px;
+  padding: 0 100px;
+  // border: 1px solid red;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.title-line {
+  width: 6px;
+  height: 30px;
+  background-color: rgba(138, 51, 253, 1);
+  // border-left: 2px solid rgba(138, 51, 253, 1);
+  border-radius: 10px;
+}
+.slider-container {
+  padding: 0 100px;
+  margin-bottom: 30px;
+}
+.image-container {
+  height: 313.67px;
+  // padding: 0 40px;
+  // margin: 0 35px; // Horizontal margin between images
+  img {
+    width: 262.81px; // Adjusted width to include the gap
+    height: 319.67px;
+    margin-bottom: 20px;
+    border-radius: 8px; // Add border-radius or other styles as desired
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add box-shadow or other styles as desired
+  }
+
+  &:not(:last-child) {
+    // margin-right: 20px; // Right margin for all except the last image
+  }
+}
+.slick-next:before {
+  margin: 0 15px;
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  color: grey;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  color: grey;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.slick-prev:before {
+  margin: 0 20px 0 -40px;
+}
+.slick-prev:before {
+  content: "←";
+}
+.slick-next:before {
+  content: "→";
+}
