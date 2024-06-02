@@ -113,6 +113,7 @@
           253,
           1
         ); // Change background color on hover
+        color: #000;
       }
     }
   }
@@ -217,7 +218,7 @@
   color: rgba(138, 51, 253, 1);
 }
 :where(.css-dev-only-do-not-override-mzwlov) a:hover {
-  color:none;
+  color: none;
 }
 .login {
   background-color: rgba(
@@ -231,4 +232,19 @@
 
 .login-or-signup-button.signup-button {
   border: 1px solid black; /* Add black border for signup button */
+}
+.profile {
+  text-decoration: none;
+  color: #000;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light>.ant-menu .ant-menu-item-selected {
+    background-color: transparent;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-menu-light .ant-menu-item-selected, :where(.css-dev-only-do-not-override-mzwlov).ant-menu-light>.ant-menu .ant-menu-item-selected {
+  color:rgba(0, 0, 0, 0.88);
+  // opacity: 0.60;
+}
+.cart{
+  text-decoration: none;
+  color:black;
 }

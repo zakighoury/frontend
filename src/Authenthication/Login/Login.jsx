@@ -1,29 +1,33 @@
 import React from 'react';
-import { Button, Input, Form, Checkbox, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Input, Form, message } from 'antd';
 import './Login.scss';
 import Signups from './Login.jpg';
 import Google from '../Signup/google-icon.png';
 import Twitter from '../Signup/twitter-icon.png';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import Cookies from 'js-cookie'; // Import js-cookie for handling cookies
 
 const Login = () => {
   const [form] = Form.useForm();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-      const response = await axios.post('http://localhost:5002/login', values, config);
+      const response = await axios.post('http://localhost:5002/login', values);
+      console.log(response)
       if (response && response.data) {
         message.success(response.data.message);
-        navigate('/'); // Navigate to main page on successful login
+        // Set the token and user ID in cookies
+        Cookies.set('token', response.data.user.token);
+
+        // console.log(response.data.user.token)
+        Cookies.set('userId', response.data.user._id);
+        Cookies.set('role', response.data.user.role);
+        // console.log(response.data.user._id)
+        navigate('/home'); // Navigate to main page on successful login
       } else {
-        message.error('Invalid response from server');
+        message.error('Invalid Credentials');
       }
       form.resetFields();
     } catch (error) {
@@ -56,10 +60,10 @@ const Login = () => {
 
           <span className="or"><span>or</span></span>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            name="usernameOrEmail"
+            rules={[{ required: true, message: 'Please input your username or email!' }]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="Username or Email" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -69,7 +73,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item>
-            <Checkbox className="forgot-password">Forgot Password?</Checkbox>
+            <Link to={"/reset"} className="forgot-password">Forgot Password?</Link>
           </Form.Item>
           <Form.Item>
             <Button className="login-button" type="primary" htmlType="submit">
@@ -78,7 +82,7 @@ const Login = () => {
           </Form.Item>
           <div className="dont-have-account">
             <span>Don't have an account?</span>
-            <a href="/signup" className="signup-link">Sign Up</a>
+            <Link to={"/signup"} className="signup-link">Sign Up</Link>
           </div>
         </Form>
       </div>

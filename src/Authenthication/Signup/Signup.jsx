@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Input, Form, Checkbox, message } from 'antd';
 import './Signup.scss';
 import Signups from './Signup.jpg';
@@ -8,27 +9,23 @@ import axios from 'axios';
 
 const Signup = () => {
     const [form] = Form.useForm();
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const onFinish = async (values) => {
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            };
-            const response = await axios.post('http://localhost:5002/signup', values, config);
+
+            const response = await axios.post('http://localhost:5002/signup', values);
             if (response && response.data) {
                 message.success(response.data.message);
+                form.resetFields();
+                navigate('/login'); // Navigate to login page after successful signup
             } else {
                 message.error('Invalid response from server');
             }
-            form.resetFields();
         } catch (error) {
             message.error(error.response.data.message);
         }
     };
-
-
 
     return (
         <div className='signup-container'>
@@ -36,7 +33,7 @@ const Signup = () => {
                 <img className='signup-images' src={Signups} alt="Signup Image" />
             </div>
             <div className="signup-form">
-                <h2 className='signup-heading'>Sign In Page</h2>
+                <h2 className='signup-heading'>Sign Up Page</h2>
                 <Form
                     form={form}
                     name="signup"
@@ -55,10 +52,10 @@ const Signup = () => {
 
                     <span className="or"><span>or</span></span>
                     <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        name="usernameOrEmail"
+                        rules={[{ required: true, message: 'Please input your username or email!' }]}
                     >
-                        <Input placeholder="Username" />
+                        <Input placeholder="Username or Email" />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -76,8 +73,8 @@ const Signup = () => {
                         </Button>
                     </Form.Item>
                     <div className="dont-have-account">
-                        <span>Don't have an account?</span>
-                        <a href="/signup" className="signup-link">Sign Up</a>
+                        <span>Already have an account?</span>
+                        <a href="/login" className="login-link">Log in</a>
                     </div>
                 </Form>
             </div>
@@ -86,4 +83,3 @@ const Signup = () => {
 };
 
 export default Signup;
-

@@ -18,7 +18,7 @@ const HeroSection = () => {
                   </Title>
                   <Title level={4}>cool / colorful / comfy</Title>
                   <span className="disc-fcc-1">
-                    <Button className="dis-fcc">Shop Now</Button>
+                    <button className="dis-fcc">Shop Now</button>
                   </span>
                 </Typography>
               </div>
@@ -34,7 +34,7 @@ const HeroSection = () => {
                   </Title>
                   <Title level={4}>cool / colorful / comfy</Title>
                   <span>
-                    <Button className="dis-fcc">Shop Now</Button>
+                    <button  className="dis-fcc">Shop Now</button>
                   </span>
                 </Typography>
               </div>
