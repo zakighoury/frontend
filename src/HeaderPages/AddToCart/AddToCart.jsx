@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
-import { MinusCircleOutlined, PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import { InputNumber, message } from 'antd';
-import './AddToCart.scss';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import {
+  MinusCircleOutlined,
+  PlusCircleOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { InputNumber, message } from "antd";
+import "./AddToCart.scss";
 
 function CartItems() {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
-  const [coupon, setCoupon] = useState('');
+  const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
   const userId = Cookies.get("userId");
   const navigate = useNavigate();
@@ -19,9 +24,12 @@ function CartItems() {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`http://localhost:5002/cart/items/${userId}`);
+        const response = await axios.get(
+          `http://localhost:5002/cart/items/${userId}`
+        );
         if (response.data && response.data.items) {
           setCartItems(response.data.items);
+          console.log(response.data.items);
         } else {
           setCartItems([]);
         }
@@ -36,34 +44,40 @@ function CartItems() {
   }, [userId]);
 
   const applyCoupon = () => {
-    if (coupon === 'SALE5') {
+    if (coupon === "SALE5") {
       const discountPercent = 20;
       setDiscount(discountPercent);
     } else {
-      alert('Invalid coupon code.');
+      alert("Invalid coupon code.");
     }
   };
 
   const updateQuantity = (itemId, newQuantity) => {
     if (newQuantity < 1) return;
-    const updatedItems = cartItems.map(item => item._id === itemId ? { ...item, quantity: newQuantity } : item);
+    const updatedItems = cartItems.map((item) =>
+      item._id === itemId ? { ...item, quantity: newQuantity } : item
+    );
     setCartItems(updatedItems);
   };
 
   const deleteItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:5002/cart/items/${userId}/${itemId}`);
-      setCartItems(prevItems => prevItems.filter(item => item._id !== itemId));
-      message.success('Item deleted successfully!');
+      await axios.delete(
+        `http://localhost:5002/cart/items/${userId}/${itemId}`
+      );
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => item._id !== itemId)
+      );
+      message.success("Item deleted successfully!");
     } catch (error) {
-      alert('Error deleting item. Please try again.');
+      alert("Error deleting item. Please try again.");
     }
   };
 
   const calculateShippingCost = () => {
     return cartItems.reduce((total, item) => {
       const shippingCost = item.productDetails.shipping;
-      return total + (typeof shippingCost === 'number' ? shippingCost : 0);
+      return total + (typeof shippingCost === "number" ? shippingCost : 0);
     }, 0);
   };
 
@@ -73,7 +87,11 @@ function CartItems() {
       const itemQuantity = item.quantity;
       const itemShipping = item.productDetails.shipping;
 
-      if (typeof itemPrice === 'number' && typeof itemQuantity === 'number' && typeof itemShipping === 'number') {
+      if (
+        typeof itemPrice === "number" &&
+        typeof itemQuantity === "number" &&
+        typeof itemShipping === "number"
+      ) {
         return total + itemPrice * itemQuantity + itemShipping;
       } else {
         return total;
@@ -90,23 +108,23 @@ function CartItems() {
   }, [cartItems, discount]);
 
   const formatPrice = (price) => {
-    if (typeof price === 'number') {
+    if (typeof price === "number") {
       if (price === 0) {
-        return 'Free';
+        return "Free";
       } else {
         return `$${price.toFixed(2)}`;
       }
-    } else if (typeof price === 'string' && price.toLowerCase() === 'free') {
-      return 'Free';
+    } else if (typeof price === "string" && price.toLowerCase() === "free") {
+      return "Free";
     } else {
       return price;
     }
   };
 
   const formatShippingCost = (shipping) => {
-    if (typeof shipping === 'number') {
+    if (typeof shipping === "number") {
       if (shipping === 0) {
-        return 'Free';
+        return "Free";
       } else {
         return `$${shipping.toFixed(2)}`;
       }
@@ -114,23 +132,39 @@ function CartItems() {
       return shipping;
     }
   };
-
   const proceedToCheckout = async () => {
-  
-  
-      navigate('/checkout', {
-        state: {
-          userId,
-          cartItems,
-          subtotal,
-          shippingCost,
-          grandTotal,
-          coupon,
-          discount
+    const stripe = await loadStripe(
+      "pk_test_51MwfWTL6yU1M3y1Ee1EIMAMceyGqEhSmiTqN2RvMHpRGa4gH2dPVARLUHdvP6dCUyWWqNStuz1exz6etaHWNVBO500HGzsutqK"
+    );
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5002/create-checkout-session",
+        {
+          products: cartItems,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      );
+
+      const session = response.data;
+
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
       });
+
+      if (result.error) {
+        alert(result.error.message);
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      alert("An error occurred while creating the checkout session. Please try again.");
+    }
   };
-  
+
 
   return (
     <div className="cart-container">
@@ -152,7 +186,11 @@ function CartItems() {
               <tr key={item._id}>
                 <td className="product-details">
                   <div className="product-image">
-                    <img className='product-img-detail' src={item.productDetails.ImgUrl} alt={item.productDetails.title} />
+                    <img
+                      className="product-img-detail"
+                      src={item.productDetails.ImgUrl}
+                      alt={item.productDetails.title}
+                    />
                     <div className="product-info">
                       <h3>{item.productDetails.name}</h3>
                       <p>Color: {item.productDetails.color}</p>
@@ -163,7 +201,11 @@ function CartItems() {
                 <td>{formatPrice(item.productDetails.price)}</td>
                 <td>
                   <div className="quantity-control">
-                    <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+                    <button
+                      onClick={() =>
+                        updateQuantity(item._id, item.quantity - 1)
+                      }
+                    >
                       <MinusCircleOutlined />
                     </button>
                     <InputNumber
@@ -171,15 +213,27 @@ function CartItems() {
                       value={item.quantity}
                       onChange={(value) => updateQuantity(item._id, value)}
                     />
-                    <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
+                    <button
+                      onClick={() =>
+                        updateQuantity(item._id, item.quantity + 1)
+                      }
+                    >
                       <PlusCircleOutlined />
                     </button>
                   </div>
                 </td>
                 <td>{formatShippingCost(item.productDetails.shipping)}</td>
-                <td>{formatPrice(item.productDetails.price * item.quantity + item.productDetails.shipping)}</td>
                 <td>
-                  <button onClick={() => deleteItem(item._id)} className="delete-btn">
+                  {formatPrice(
+                    item.productDetails.price * item.quantity +
+                    item.productDetails.shipping
+                  )}
+                </td>
+                <td>
+                  <button
+                    onClick={() => deleteItem(item._id)}
+                    className="delete-btn"
+                  >
                     <DeleteOutlined />
                   </button>
                 </td>

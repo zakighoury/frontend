@@ -1,78 +1,28 @@
-.profile-content-layout {
-  flex: 1;
-  padding: 20px;
-  background-color: #f0f2f5;
-
-  .profile-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-    .profile-data {
-      margin-bottom: 20px;
-
-      h2 {
-        margin-bottom: 10px;
-        font-size: 24px;
-        color: #333;
-      }
-
-      .user-info {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 12px;
-
-        .info-item {
-          flex: 1;
-          margin-right: 20px;
-
-          p {
-            margin-bottom: 8px;
-            font-size: 16px;
-            color: #555;
-          }
-
-          .label {
-            font-weight: bold;
-            color: #333;
-          }
-        }
-      }
-
-      .user-actions {
-        display: flex;
-        justify-content: space-between;
-
-        button {
-          padding: 8px 16px;
-          border: none;
-          border-radius: 4px;
-          background-color: #1890ff;
-          color: #fff;
-          cursor: pointer;
-          transition: background-color 0.3s;
-
-          &:hover {
-            background-color: #1478c8;
-          }
-        }
-      }
-    }
-  }
+.profile-content-background {
+  background: #f5f5f5;
+  padding: 24px;
+  border-radius: 8px;
 }
-.user-icon{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 10px;
+
+.profile-data {
+  margin: 20px 0;
 }
-.profile-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
+
+.profile-data .label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.profile-menu{
-    background-color: black;
+
+.profile-data .edit-button {
+  margin-left: 16px;
+}
+.username_header {
+  border-left: 6px solid #8a33fd;
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
 }

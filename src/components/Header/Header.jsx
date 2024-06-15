@@ -99,7 +99,7 @@ const Headers = () => {
           <div className="icon-container">
             {isLoggedIn ? (
               <>
-                <HeartOutlined className="icon" />
+               <Link className='wishlist' to={"/wishlist"}> <HeartOutlined className="icon" /></Link>
                 <Link className='profile' to={"/profile"}><UserOutlined className="icon" /></Link>
                 <Link className='cart' to={"/cart"}><ShoppingCartOutlined className="icon" /></Link>
               </>

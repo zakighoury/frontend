@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Tabs, Layout, Menu } from 'antd';
-import Cart from '../Cart/Cart';
-import OrderCheck from '../Cart/OrderCheck/OrderCheck';
+import React, { useState } from "react";
+import { Tabs, Layout, Menu } from "antd";
+import Cart from "../Cart/Cart";
+import OrderCheck from "../Cart/OrderCheck/OrderCheck";
+import AllUser from "../AllUser/AllUser";
+import Product from "../Cart/Product/Product";
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -9,13 +11,13 @@ import {
   CreditCardOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 const { Sider, Content } = Layout;
 
 const AdminPanel = () => {
-  const [activeTab, setActiveTab] = useState('cart');
+  const [activeTab, setActiveTab] = useState("cart");
   const [collapsed, setCollapsed] = useState(false);
 
   const handleTabChange = (key) => {
@@ -27,15 +29,19 @@ const AdminPanel = () => {
   };
 
   return (
-
-    <Layout style={{ minHeight: '100vh' }}>
-
-      <Sider collapsible collapsed={collapsed} onCollapse={toggleSidebar} width={200} style={{ background: '#fff' }}>
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={toggleSidebar}
+        width={200}
+        style={{ background: "#fff" }}
+      >
         <div className="logo" />
-        <h1 style={{textAlign:'center'}}>Admin Panel</h1>
+        <h1 style={{ textAlign: "center" }}>Admin Panel</h1>
         <Menu
           mode="inline"
-          defaultSelectedKeys={['cart']}
+          defaultSelectedKeys={["cart"]}
           selectedKeys={[activeTab]}
           onClick={({ key }) => handleTabChange(key)}
         >
@@ -51,22 +57,28 @@ const AdminPanel = () => {
           <Menu.Item key="payment" icon={<CreditCardOutlined />}>
             Payment
           </Menu.Item>
+          <Menu.Item key="User" icon={<UserOutlined />}>
+            User
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
-        <Content style={{ margin: '16px' }}>
+        <Content style={{ margin: "16px" }}>
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="Cart" key="cart">
               <Cart />
             </TabPane>
             <TabPane tab="Products" key="products">
-              <p>Products content goes here</p>
+              <Product />
             </TabPane>
             <TabPane tab="Orders" key="orders">
               <OrderCheck />
             </TabPane>
             <TabPane tab="Payment" key="payment">
               <p>Payment content goes here</p>
+            </TabPane>
+            <TabPane tab="User" key="User">
+              <AllUser />
             </TabPane>
           </Tabs>
         </Content>

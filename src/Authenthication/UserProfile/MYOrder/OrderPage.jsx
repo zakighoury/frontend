@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { Tabs, Modal, message, Button } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom"; // Added import
+import { Link } from "react-router-dom";
 import "./OrderPage.scss";
 
 const { TabPane } = Tabs;
@@ -104,14 +104,14 @@ function OrdersPage() {
               ))}
             </div>
             <div className="order-btn">
-            <Link
+              <Link
                 to={`/order-detail/${userId}/${order._id}`}
                 onClick={() => Cookies.set("orderId", order._id)}
               >
                 <Button>View Detail</Button>
               </Link>
             </div>
-            {orderStatus === "inprogress" && (
+            {orderStatus === "Order Placed" && (
               <CloseCircleOutlined
                 className="delete-icon"
                 onClick={() => confirmDeleteOrder(order._id)}
@@ -133,12 +133,14 @@ function OrdersPage() {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Active" key="1">
             {renderOrders("Order Placed")}
+            {renderOrders("inProgress")} {/* Corrected status */}
+            {renderOrders("Shipped")} {/* Corrected status */}
           </TabPane>
-          <TabPane tab="Canceled" key="2">
-            {renderOrders("canceled")}
+          <TabPane tab="Canceled" key="3">
+            {renderOrders("Cancelled")} {/* Corrected status */}
           </TabPane>
-          <TabPane tab="Completed" key="3">
-            {renderOrders("completed")}
+          <TabPane tab="Completed" key="4">
+            {renderOrders("Delivered")} {/* Corrected status */}
           </TabPane>
         </Tabs>
       </div>

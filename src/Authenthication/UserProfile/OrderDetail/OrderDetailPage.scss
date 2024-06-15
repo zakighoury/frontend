@@ -1,75 +1,132 @@
+// Variables for consistent styling
+$primary-color: #1890ff;
+$secondary-color: #f0f2f5;
+$highlight-color: #ff4d4f;
+$font-family: 'Arial, sans-serif';
+$border-radius: 8px;
+$spacing-unit: 16px;
+
 .order-detail-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  font-family: $font-family;
+  padding: $spacing-unit;
+  background-color: $secondary-color;
 
   .order-container {
-    width: 80%;
-    max-width: 800px;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-  }
+    background: white;
+    border-radius: $border-radius;
+    padding: $spacing-unit;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  .order-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  .status-dot-container {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-  }
-
-  .status-dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #e0e0e0;
-  }
-
-  .status-dot.active {
-    background-color: #1890ff;
-  }
-
-  .timeline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    margin: 20px 0;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background-color: #e0e0e0;
-      transform: translateY(-50%);
-    }
-
-    .status {
-      display: flex;
-      flex-direction: column;
+    .order-header {
+      // display: flex;
+      justify-content: space-between;
       align-items: center;
-      position: relative;
-      z-index: 1;
+      border-bottom: 1px solid $secondary-color;
+      padding-bottom: $spacing-unit;
+      margin-bottom: $spacing-unit;
 
-      .status-label {
-        margin-top: 8px;
-        font-size: 12px;
+      .order-info-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // flex-direction: column;
+        
+        .order-info {
+          h2 {
+            color: $primary-color;
+            margin: 0;
+          }
+
+          p {
+            margin: 0;
+            color: #555;
+          }
+        }
+      }
+
+      p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 0;
       }
     }
 
-    .status.active .status-dot {
-      background-color: #1890ff;
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing-unit;
+      
+      .status {
+        text-align: center;
+
+        &.active .status-dot {
+          background-color: $primary-color;
+        }
+
+        .status-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #ccc;
+          margin: 0 auto $spacing-unit;
+        }
+
+        .status-label {
+          font-size: 0.9rem;
+          color: #555;
+        }
+      }
+    }
+
+    .verification-msg {
+      background-color: #e6f7ff;
+      border-left: 4px solid $primary-color;
+      padding: $spacing-unit;
+      margin-bottom: $spacing-unit;
+      font-size: 0.9rem;
+      color: $primary-color;
+    }
+
+    .product-detail {
+      h3 {
+        color: $primary-color;
+        margin-bottom: $spacing-unit;
+      }
+
+      .product-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $secondary-color;
+        padding: $spacing-unit 0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .product-image {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: $border-radius;
+          margin-right: $spacing-unit;
+        }
+
+        p {
+          margin: 0;
+          color: #555;
+        }
+
+        .delete-icon {
+          font-size: 1.2rem;
+          color: $highlight-color;
+          cursor: pointer;
+
+          &:hover {
+            color: darken($highlight-color, 10%);
+          }
+        }
+      }
     }
   }
 }

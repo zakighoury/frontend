@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Select, Slider, Tabs } from "antd";
+import { Layout, Select, Slider, Tabs, message } from "antd";
 import { FilterOutlined, HeartOutlined, HeartFilled } from "@ant-design/icons";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./Shop.scss";
+import CartItems from "./../AddToCart/AddToCart";
 
 const { Sider, Content } = Layout;
 const { Option } = Select;
@@ -60,13 +62,15 @@ const Shop = () => {
   const [colorSelectorVisible, setColorSelectorVisible] = useState(false);
   const [sizeSelectorVisible, setSizeSelectorVisible] = useState(false);
   const [categorySelectorVisible, setCategorySelectorVisible] = useState(false);
-  const [dressingStyleSelectorVisible, setDressingStyleSelectorVisible] = useState(false);
+  const [dressingStyleSelectorVisible, setDressingStyleSelectorVisible] =
+    useState(false);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedDressingStyle, setSelectedDressingStyle] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  const Navigate = useNavigate();
+  const [isInWishlist, setIsInWishlist] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCartItems();
@@ -126,16 +130,37 @@ const Shop = () => {
     setSelectedDressingStyle(value);
   };
 
-  const handleWishlistToggle = (itemId) => {
-    if (wishlist.includes(itemId)) {
-      setWishlist(wishlist.filter((id) => id !== itemId));
-    } else {
-      setWishlist([...wishlist, itemId]);
+  const handleAddToWishlist = async (itemId) => {
+    try {
+      const userId = Cookies.get("userId");
+      await axios.post("http://localhost:5002/api/wishlist/add", {
+        userId,
+        itemId,
+      });
+      setIsInWishlist((prevState) => ({ ...prevState, [itemId]: true }));
+      message.success("Item added to wishlist successfully!");
+    } catch (error) {
+      message.error("Item already in wishlist!");
+      console.error("Error adding item to wishlist:", error);
+    }
+  };
+
+  const handleRemoveFromWishlist = async (itemId) => {
+    try {
+      const userId = Cookies.get("userId"); // Get userId from your authentication system
+      await axios.post("http://localhost:5002/api/wishlist/remove", {
+        userId,
+        itemId,
+      });
+      setIsInWishlist((prevState) => ({ ...prevState, [itemId]: false }));
+      message.success("Item removed from wishlist successfully!");
+    } catch (error) {
+      console.error("Error removing item from wishlist:", error);
     }
   };
 
   const handleProductClick = (itemId) => {
-    Navigate(`/api/cart/${itemId}`);
+    navigate(`/api/cart/${itemId}`);
   };
 
   const filteredCartItems = cartItems.filter((item) => {
@@ -144,7 +169,8 @@ const Shop = () => {
       (!selectedSubcategory || item.subcategory === selectedSubcategory) &&
       (!selectedColor || item.title.includes(selectedColor)) &&
       (!selectedSize || item.size === selectedSize) &&
-      (!selectedDressingStyle || item.dressingStyle === selectedDressingStyle) &&
+      (!selectedDressingStyle ||
+        item.dressingStyle === selectedDressingStyle) &&
       item.price >= priceRange[0] &&
       item.price <= priceRange[1]
     );
@@ -163,7 +189,11 @@ const Shop = () => {
           <div style={{ marginTop: 20 }}>
             <div
               onClick={toggleCategorySelector}
-              style={{ fontWeight: "bold", cursor: "pointer", marginBottom: 10 }}
+              style={{
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginBottom: 10,
+              }}
             >
               Category
             </div>
@@ -172,7 +202,11 @@ const Shop = () => {
                 <Select
                   placeholder="Select Category"
                   onChange={handleCategoryChange}
-                  style={{ width: "100%", marginBottom: 10, fontWeight: "bold" }}
+                  style={{
+                    width: "100%",
+                    marginBottom: 10,
+                    fontWeight: "bold",
+                  }}
                   value={selectedCategory}
                 >
                   {Object.keys(categories).map((category) => (
@@ -185,7 +219,11 @@ const Shop = () => {
                   <Select
                     placeholder="Select Subcategory"
                     onChange={handleSubcategoryChange}
-                    style={{ width: "100%", marginBottom: 10, fontWeight: "bold" }}
+                    style={{
+                      width: "100%",
+                      marginBottom: 10,
+                      fontWeight: "bold",
+                    }}
                     value={selectedSubcategory}
                   >
                     {categories[selectedCategory].map((subcategory) => (
@@ -201,7 +239,11 @@ const Shop = () => {
           <div style={{ marginTop: 20 }}>
             <div
               onClick={togglePriceSelector}
-              style={{ fontWeight: "bold", cursor: "pointer", marginBottom: 10 }}
+              style={{
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginBottom: 10,
+              }}
             >
               Price
             </div>
@@ -222,7 +264,11 @@ const Shop = () => {
           <div style={{ marginTop: 20 }}>
             <div
               onClick={toggleColorSelector}
-              style={{ fontWeight: "bold", cursor: "pointer", marginBottom: 10 }}
+              style={{
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginBottom: 10,
+              }}
             >
               Color
             </div>
@@ -232,7 +278,9 @@ const Shop = () => {
                   {colors.map((color) => (
                     <div
                       key={color}
-                      className={`color-swatch ${color.toLowerCase()} ${selectedColor === color ? 'selected' : ''}`}
+                      className={`color-swatch ${color.toLowerCase()} ${
+                        selectedColor === color ? "selected" : ""
+                      }`}
                       style={{
                         backgroundColor: color.toLowerCase(),
                         width: 40,
@@ -240,7 +288,8 @@ const Shop = () => {
                         margin: 5,
                         borderRadius: "50%",
                         cursor: "pointer",
-                        border: selectedColor === color ? '2px solid black' : 'none'
+                        border:
+                          selectedColor === color ? "2px solid black" : "none",
                       }}
                       onClick={() => handleColorChange(color)}
                       title={color}
@@ -253,7 +302,11 @@ const Shop = () => {
           <div style={{ marginTop: 20 }}>
             <div
               onClick={toggleSizeSelector}
-              style={{ fontWeight: "bold", cursor: "pointer", marginBottom: 10 }}
+              style={{
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginBottom: 10,
+              }}
             >
               Size
             </div>
@@ -263,13 +316,16 @@ const Shop = () => {
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      className={`size-button ${selectedSize === size ? "selected" : ""}`}
+                      className={`size-button ${
+                        selectedSize === size ? "selected" : ""
+                      }`}
                       style={{
                         padding: "10px 15px",
                         margin: 5,
                         cursor: "pointer",
                         border: "1px solid #ccc",
-                        backgroundColor: selectedSize === size ? "#000" : "#fff",
+                        backgroundColor:
+                          selectedSize === size ? "#000" : "#fff",
                         color: selectedSize === size ? "#fff" : "#000",
                       }}
                       onClick={() => handleSizeChange(size)}
@@ -284,7 +340,11 @@ const Shop = () => {
           <div style={{ marginTop: 20 }}>
             <div
               onClick={toggleDressingStyleSelector}
-              style={{ fontWeight: "bold", cursor: "pointer", marginBottom: 10 }}
+              style={{
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginBottom: 10,
+              }}
             >
               Dressing Style
             </div>
@@ -295,8 +355,16 @@ const Shop = () => {
                     key={style}
                     placeholder={`${style}`}
                     onChange={handleDressingStyleChange}
-                    style={{ width: "100%", marginBottom: 10, fontWeight: "bold" }}
-                    value={selectedDressingStyle === style ? selectedDressingStyle : null}
+                    style={{
+                      width: "100%",
+                      marginBottom: 10,
+                      fontWeight: "bold",
+                    }}
+                    value={
+                      selectedDressingStyle === style
+                        ? selectedDressingStyle
+                        : null
+                    }
                   >
                     {dressingStyles[style].map((option) => (
                       <Option key={option} value={option}>
@@ -336,26 +404,43 @@ const Shop = () => {
                 style={{ cursor: "pointer" }}
               >
                 <div className="wishlist-icon">
-                  {wishlist.includes(item.id) ? (
+                  {isInWishlist[item._id] ? (
                     <HeartFilled
-                      style={{ color: "black", cursor: "pointer", backgroundColor: 'white', float: 'right' }}
+                      style={{
+                        color: "black",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        padding: "10px",
+                        cursor: "pointer",
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleWishlistToggle(item.id);
+                        handleRemoveFromWishlist(item._id);
                       }}
                     />
                   ) : (
                     <HeartOutlined
-                      style={{ color: "black", cursor: "pointer", backgroundColor: 'white', float: 'right' }}
+                      style={{
+                        color: "black",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        padding: "10px",
+                        cursor: "pointer",
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleWishlistToggle(item.id);
+                        handleAddToWishlist(item._id);
+                        Cookies.set('itemId', item._id);
                       }}
                     />
                   )}
                 </div>
                 <div className="cart-item-details">
-                  <img className="cart-item-image" src={item.ImgUrl} alt={item.title} />
+                  <img
+                    className="cart-item-image"
+                    src={item.ImgUrl}
+                    alt={item.title}
+                  />
                   <div className="cart-item-info">
                     <div>
                       <h3>{truncateTitle(item.title, 3)}</h3>

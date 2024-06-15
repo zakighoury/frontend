@@ -1,0 +1,204 @@
+// OrderListPage.scss
+
+.order-list-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  
+    .order-list-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+  
+    .loading,
+    .error {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  
+    .order-container {
+      padding: 20px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 20px;
+  
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+  
+        .order-info-container {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+  
+          .order-info {
+            h2 {
+              margin: 0;
+              font-size: 22px;
+            }
+  
+            p {
+              margin: 5px 0;
+              font-size: 16px;
+            }
+          }
+  
+          .ant-input-number {
+            width: 100%;
+          }
+        }
+      }
+  
+      .timeline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+  
+        .status {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+  
+          .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            margin-bottom: 5px;
+  
+            &.active {
+              background: #4caf50;
+            }
+          }
+  
+          .status-label {
+            font-size: 14px;
+            text-align: center;
+          }
+        }
+  
+        .status.active .status-dot {
+          background: #4caf50;
+        }
+      }
+  
+      .verification-msg {
+        font-size: 16px;
+        color: #4caf50;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+  
+      .product-detail {
+        margin-bottom: 20px;
+  
+        h3 {
+          margin: 0 0 10px;
+        }
+  
+        .product-item {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 10px 0;
+          border-bottom: 1px solid #ddd;
+  
+          .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+          }
+  
+          .ant-input,
+          .ant-input-number {
+            width: 100%;
+          }
+  
+          p {
+            margin: 0;
+            font-size: 14px;
+          }
+        }
+      }
+  
+      .edit-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+  
+      .ant-btn-primary {
+        background-color: #1890ff;
+        border-color: #1890ff;
+      }
+  
+      .ant-btn-danger {
+        background-color: #ff4d4f;
+        border-color: #ff4d4f;
+      }
+    }
+  }
+  
+  // Responsive Styles
+  @media (max-width: 768px) {
+    .order-list-page {
+      .order-container {
+        .order-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+  
+        .timeline {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .order-list-page {
+      .order-container {
+        .order-header {
+          .order-info-container {
+            gap: 5px;
+          }
+  
+          .ant-input-number {
+            width: 100%;
+          }
+        }
+  
+        .timeline {
+          .status {
+            .status-label {
+              font-size: 12px;
+            }
+          }
+        }
+  
+        .product-detail {
+          .product-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+  
+            .product-image {
+              width: 80px;
+              height: 80px;
+            }
+          }
+        }
+      }
+    }
+  }
+  

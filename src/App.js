@@ -15,9 +15,11 @@ import Shop from "./HeaderPages/Shop/Shop";
 import Men from "./HeaderPages/Men/Men";
 import CartDetail from "./HeaderPages/Shop/CartDetail/CartDetail";
 import AddToCart from "./HeaderPages/AddToCart/AddToCart";
-import CheckOut from "./HeaderPages/AddToCart/checkout/checkout.jsx";
+import Success from "./HeaderPages/AddToCart/checkout/Success.jsx";
 import Order from "./Authenthication/UserProfile/MYOrder/OrderPage";
 import OrderDetailPage from "./Authenthication/UserProfile/OrderDetail/OrderDetail.jsx";
+import WishlistPage from "./Authenthication/UserProfile/Wishlistpage/Wishlistpage.jsx";
+import PasswordReset from "./Authenthication/Reset_Password/PasswordReset/PasswordReset.jsx";
 function App() {
   return (
     <Router>
@@ -31,13 +33,15 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/api/cart/:id" element={<CartDetail />} />
           <Route path="/cart" element={<AddToCart />} />
-          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/success" element={<Success />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/order-detail/:id/:id" element={<OrderDetailPage />} />
           <Route path="/men" element={<Men />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/reset-password/verify-token/:userId/:token" element={<PasswordReset />} />
           <Route path="/login" element={<Login />} />
         </Route>
       </Routes>

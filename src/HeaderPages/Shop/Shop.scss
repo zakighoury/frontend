@@ -70,6 +70,7 @@
   flex-wrap: wrap;
   align-items: center;
   .cart-item {
+    position: relative;
     // width: 100%;
     // padding: 20px;
     // margin-bottom: 20px;
@@ -112,12 +113,24 @@
 
 .wishlist-icon {
   position: absolute;
-  right: 10px;
   top: 10px;
-  background: white;
-  border-radius: 50%;
-  padding: 5px;
+  right: 10px;
+  z-index: 1;
+
+  .anticon {
+    font-size: 24px;
+    color: black;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+  .anticon-heart-filled {
+    color: red;
+  }
 }
+
 
 .cart-item-details {
   display: flex;

@@ -1,0 +1,39 @@
+.user-details-modal {
+    text-align: center;
+  
+    .user-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+  
+    h3 {
+        text-align: center;
+      font-size: 24px;
+      color: #1890ff; /* Blue color */
+      margin-bottom: 10px;
+    }
+  
+    p {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+  
+    .email {
+      color: #52c41a; /* Green color */
+    }
+  
+    .role {
+      color: #faad14; /* Yellow color */
+    }
+  
+    .status {
+      color: #f5222d; /* Red color */
+    }
+  
+    .id {
+      color: #722ed1; /* Purple color */
+    }
+  }
+  
