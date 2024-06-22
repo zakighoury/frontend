@@ -113,33 +113,89 @@ const Profile = () => {
 
     // Update profile on the server
     const token = Cookies.get("token");
-    axios
-      .post(
-        `http://localhost:5002/upload-avatar`,
-        {
-          ...formData,
-          [modalField]: modalValue,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    if (modalField === "username") {
+      axios
+        .put(
+          `http://localhost:5002/profile`,
+          {
+            username: modalValue,
           },
-        }
-      )
-      .then(() => {
-        message.success("Profile updated successfully");
-        setProfileData((prevState) => ({
-          ...prevState,
-          user: {
-            ...prevState.user,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          message.success("Username updated successfully");
+          setProfileData((prevState) => ({
+            ...prevState,
+            user: {
+              ...prevState.user,
+              username: modalValue,
+            },
+          }));
+        })
+        .catch((error) => {
+          console.error("Error updating username:", error);
+          message.error("Failed to update username");
+        });
+    } else if (modalField === "email") {
+      axios
+        .put(
+          `http://localhost:5002/profile`,
+          {
+            email: modalValue,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          message.success("Email updated successfully");
+          setProfileData((prevState) => ({
+            ...prevState,
+            user: {
+              ...prevState.user,
+              email: modalValue,
+            },
+          }));
+        })
+        .catch((error) => {
+          console.error("Error updating email:", error);
+          message.error("Failed to update email");
+        });
+    } else if (modalField === "avatar")
+      // Update profile on the server
+      axios
+        .post(
+          `http://localhost:5002/upload-avatar`,
+          {
+            ...formData,
             [modalField]: modalValue,
           },
-        }));
-      })
-      .catch((error) => {
-        console.error("Error updating profile data:", error);
-        message.error("Failed to update profile");
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(() => {
+          message.success("Profile updated successfully");
+          setProfileData((prevState) => ({
+            ...prevState,
+            user: {
+              ...prevState.user,
+              [modalField]: modalValue,
+            },
+          }));
+        })
+        .catch((error) => {
+          console.error("Error updating profile data:", error);
+          message.error("Failed to update profile");
+        });
 
     setModalVisible(false);
   };
@@ -151,7 +207,6 @@ const Profile = () => {
   const handleChange = (e) => {
     setModalValue(e.target.value);
   };
-
   const extractUsername = (email) => {
     const atIndex = email.indexOf("@");
     return atIndex !== -1 ? email.substring(0, atIndex) : email;
@@ -188,7 +243,7 @@ const Profile = () => {
               className="bold"
               style={{ color: "#722ED1", textTransform: "capitalize" }}
             >
-              {}
+              { }
             </span>
           </Breadcrumb.Item>
         </Breadcrumb>
