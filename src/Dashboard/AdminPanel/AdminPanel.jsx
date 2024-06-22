@@ -4,6 +4,7 @@ import Cart from "../Cart/Cart";
 import OrderCheck from "../Cart/OrderCheck/OrderCheck";
 import AllUser from "../AllUser/AllUser";
 import Product from "../Cart/Product/Product";
+import PaymentList from "../Cart/PaymentList/PaymentList";
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -75,7 +76,7 @@ const AdminPanel = () => {
               <OrderCheck />
             </TabPane>
             <TabPane tab="Payment" key="payment">
-              <p>Payment content goes here</p>
+              <PaymentList />
             </TabPane>
             <TabPane tab="User" key="User">
               <AllUser />

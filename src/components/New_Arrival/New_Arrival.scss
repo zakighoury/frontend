@@ -1,6 +1,10 @@
 .new-arrival-container {
+  // height: 1000px;
+  display: block;
+  height: 500px;
   // Add any container styles here
 }
+
 .title {
   width: 100%;
   height: 70px;
@@ -9,7 +13,9 @@
   display: flex;
   gap: 15px;
   align-items: center;
+  // margin-bottom: 0;
 }
+
 .title-line {
   width: 6px;
   height: 30px;
@@ -17,10 +23,12 @@
   // border-left: 2px solid rgba(138, 51, 253, 1);
   border-radius: 10px;
 }
+
 .slider-container {
   padding: 0 100px;
   margin-bottom: 30px;
 }
+
 .image-container {
   height: 313.67px;
   // padding: 0 40px;
@@ -37,6 +45,7 @@
     // margin-right: 20px; // Right margin for all except the last image
   }
 }
+
 .slick-next:before {
   margin: 0 15px;
   font-family: "slick";
@@ -47,6 +56,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .slick-prev:before,
 .slick-next:before {
   font-family: "slick";
@@ -57,12 +67,85 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .slick-prev:before {
   margin: 0 20px 0 -40px;
 }
+
 .slick-prev:before {
   content: "←";
 }
+
 .slick-next:before {
   content: "→";
+}
+
+// Media Queries
+
+// Large screens (desktops, laptops)
+@media (min-width: 1200px) {
+  .title {
+    padding: 0 80px;
+  }
+
+  .slider-container {
+    padding: 0 80px;
+  }
+
+  .image-container img {
+    width: 280px;
+    height: 340px;
+  }
+}
+
+// Medium screens (tablets, smaller laptops)
+@media (min-width: 768px) and (max-width: 1199px) {
+  .title {
+    padding: 0 50px;
+    height: 60px;
+  }
+
+  .slider-container {
+    padding: 0 50px;
+  }
+
+  .image-container {
+    height: auto;
+
+    img {
+      width: 220px;
+      height: 280px;
+    }
+  }
+}
+
+// Small screens (mobile devices)
+@media (max-width: 767px) {
+  .title {
+    padding: 0 20px;
+    height: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .slider-container {
+    display: none;
+    padding: 0 20px;
+  }
+
+  .image-container {
+    height: auto;
+    img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+  }
+
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 16px;
+    margin: 0 10px;
+  }
 }

@@ -1,0 +1,104 @@
+.Big_Saving_zone-content {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction: column;
+
+  .Big_Saving_zone-items {
+    position: relative;
+    width: 100%;
+    max-width: 600px; // Adjust the width as necessary
+    margin: 20px 0;
+
+    .Big_Saving_zone-images {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .overlays {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      // background-color: rgba(0, 0, 0, 0.5); // Adjust the background color and opacity as needed
+      text-align: center;
+
+      h3,
+      p,
+      button {
+        margin: 10px 0;
+      }
+
+      button {
+        background-color: #ff6347; // Adjust the button color as needed
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        cursor: pointer;
+        font-size: 1rem;
+
+        &:hover {
+          background-color: #ff4500; // Adjust the hover color as needed
+        }
+      }
+    }
+  }
+}
+
+// Media Queries
+
+// Large screens (desktops, laptops)
+@media (min-width: 1200px) {
+  .Big_Saving_zone-content {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .Big_Saving_zone-items {
+    max-width: 800px; // Adjust as necessary for large screens
+  }
+}
+
+// Medium screens (tablets, smaller laptops)
+@media (min-width: 768px) and (max-width: 1199px) {
+  .Big_Saving_zone-content {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .Big_Saving_zone-items {
+    max-width: 700px; // Adjust as necessary for medium screens
+  }
+}
+
+// Small screens (mobile devices)
+@media (max-width: 767px) {
+  .Big_Saving_zone-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Big_Saving_zone-items {
+    display: none;
+    width: 90%;
+    max-width: none;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  .Big_Saving_zone-images {
+    height: auto; // Maintain aspect ratio for images on small screens
+  }
+
+  .overlays {
+    padding: 10px;
+  }
+}

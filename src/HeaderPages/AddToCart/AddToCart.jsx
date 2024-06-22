@@ -132,16 +132,28 @@ function CartItems() {
       return shipping;
     }
   };
+
   const proceedToCheckout = async () => {
     const stripe = await loadStripe(
-      "pk_test_51MwfWTL6yU1M3y1Ee1EIMAMceyGqEhSmiTqN2RvMHpRGa4gH2dPVARLUHdvP6dCUyWWqNStuz1exz6etaHWNVBO500HGzsutqK"
+      "pk_test_51PTPUzIMVmLanO3fmzEb2wlZ8iY8jy6LNGiXlZ9JKKHbTveBVwUwL81ntDBmbbbSG9eMEjg9w7HHouXy5e3loqmB00UChmp7R7"
     );
 
     try {
+      // Extract only the required data from cartItems
+      const itemsToSend = cartItems.map((item) => ({
+        name: item.productDetails.name,
+        color: item.productDetails.color,
+        ImgUrl: item.productDetails.ImgUrl,
+        description: item.productDetails.description,
+        price: item.productDetails.price,
+        quantity: item.quantity,
+      }));
+
       const response = await axios.post(
         "http://localhost:5002/create-checkout-session",
         {
-          products: cartItems,
+          userId,
+          cartItems: itemsToSend, // Send the modified data
         },
         {
           headers: {
@@ -151,6 +163,7 @@ function CartItems() {
       );
 
       const session = response.data;
+      console.log(session);
 
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
@@ -161,10 +174,11 @@ function CartItems() {
       }
     } catch (error) {
       console.error("Error creating checkout session:", error);
-      alert("An error occurred while creating the checkout session. Please try again.");
+      alert(
+        "An error occurred while creating the checkout session. Please try again."
+      );
     }
   };
-
 
   return (
     <div className="cart-container">
@@ -226,7 +240,7 @@ function CartItems() {
                 <td>
                   {formatPrice(
                     item.productDetails.price * item.quantity +
-                    item.productDetails.shipping
+                      item.productDetails.shipping
                   )}
                 </td>
                 <td>

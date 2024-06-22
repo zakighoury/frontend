@@ -46,7 +46,7 @@ const New_Arrival = () => {
         <div className="new-arrival-container">
             <div className='title'>
                 <span className='title-line'></span>
-                <h2>New Arrivals</h2>
+                <h2 style={{ margin: 0 }}>New Arrivals</h2>
             </div>
             <div className="slider-container">
                 <Slider {...settings}>

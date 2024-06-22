@@ -21,6 +21,7 @@ const items = [
 
 const FooterUser = () => {
   return (
+    <div>
     <div className="footer-page">
       {/* Stage 1 */}
       <div className="footer-stage-1">
@@ -180,6 +181,7 @@ const FooterUser = () => {
       <div>
         <p>Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.</p>
       </div>
+    </div>
     </div>
   );
 };
