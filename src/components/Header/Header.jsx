@@ -36,7 +36,9 @@ const Headers = () => {
       <Layout>
         <Header className="navbar-container">
           <div className="logo-container">
-            <img src={Header_logo} alt="Logo" />
+            <Link style={{ textDecoration: 'none' }} to={"/home"}>
+              <img src={Header_logo} alt="Logo" />
+            </Link>
           </div>
           <div className="menu">
             {isLoggedIn ? (
@@ -99,7 +101,7 @@ const Headers = () => {
           <div className="icon-container">
             {isLoggedIn ? (
               <>
-               <Link className='wishlist' to={"/wishlist"}> <HeartOutlined className="icon" /></Link>
+                <Link className='wishlist' to={"/wishlist"}> <HeartOutlined className="icon" /></Link>
                 <Link className='profile' to={"/profile"}><UserOutlined className="icon" /></Link>
                 <Link className='cart' to={"/cart"}><ShoppingCartOutlined className="icon" /></Link>
               </>

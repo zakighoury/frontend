@@ -100,7 +100,23 @@
     object-fit: cover;
   }
 }
+h3,
+p,
+button {
+  margin: 10px 0;
+}
+button {
+  background-color: #fff; // Adjust the button color as needed
+  border: none;
+  padding: 10px 20px;
+  color: black;
+  cursor: pointer;
+  font-size: 1rem;
 
+  &:hover {
+    background-color: #fff; // Adjust the hover color as needed
+  }
+}
 // Media Queries
 
 // Large screens (desktops, laptops)

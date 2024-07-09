@@ -33,7 +33,7 @@ const colors = [
   "Orange",
   "Brown",
   "Gray",
-  "Cyan",
+  "Khaki"
 ];
 
 const sizes = ["XS", "XM", "S", "M", "L", "XL", "XXL", "3XL", "4XL"];
@@ -278,9 +278,8 @@ const Shop = () => {
                   {colors.map((color) => (
                     <div
                       key={color}
-                      className={`color-swatch ${color.toLowerCase()} ${
-                        selectedColor === color ? "selected" : ""
-                      }`}
+                      className={`color-swatch ${color.toLowerCase()} ${selectedColor === color ? "selected" : ""
+                        }`}
                       style={{
                         backgroundColor: color.toLowerCase(),
                         width: 40,
@@ -316,9 +315,8 @@ const Shop = () => {
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      className={`size-button ${
-                        selectedSize === size ? "selected" : ""
-                      }`}
+                      className={`size-button ${selectedSize === size ? "selected" : ""
+                        }`}
                       style={{
                         padding: "10px 15px",
                         margin: 5,
@@ -445,6 +443,8 @@ const Shop = () => {
                     <div>
                       <h3>{truncateTitle(item.title, 3)}</h3>
                       <p>{item.brand}</p>
+                      {/* <p>{item.color}</p> */}
+                      {/* <p>{item.size}</p> */}
                     </div>
                     <div>
                       <p className="cart-item-price"> ${item.price}</p>

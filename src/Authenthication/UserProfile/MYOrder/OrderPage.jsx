@@ -80,7 +80,7 @@ function OrdersPage() {
               {new Date(order.estimatedDeliveryDate).toLocaleString()}
             </p>
             <p className="payment-method">
-              Payment Method: {order.paymentMethod}
+              Payment Method: {order.payment.cardType}
             </p>
             <div className="order-items">
               {order.cartItems.map((item) => (

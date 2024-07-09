@@ -68,7 +68,10 @@ const Cart = () => {
         <div className="cart-item" key={item._id}>
           <img src={item.ImgUrl} alt={item.name} className="cart-item-images" />
           <div className="cart-item-details">
-            <h3 className="cart-item-titles">{item.name}</h3>
+            <p className="cart-item-titles">Title: {item.title}</p>
+            <h3 className="cart-item-titles">Name: {item.name}</h3>
+            <p>Color: {item.color}</p>
+            <p>Size: {item.size}</p>
             <p>Category: {item.category}</p>
             <p>Subcategory: {item.subcategory}</p>
             <p>Price: ${item.price}</p>
@@ -101,9 +104,44 @@ const Cart = () => {
           hideRequiredMark
         >
           <Form.Item
+            label="Title"
+            name="title"
+            rules={[{ required: true, message: 'Please enter title' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
             label="Name"
             name="name"
             rules={[{ required: true, message: 'Please enter name' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Color"
+            name="color"
+            rules={[{ required: true, message: 'Please enter color' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Size"
+            name="size"
+            rules={[{ required: true, message: 'Please enter size' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Category"
+            name="category"
+            rules={[{ required: true, message: 'Please enter category' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Subcategory"
+            name="subcategory"
+            rules={[{ required: true, message: 'Please enter subcategory' }]}
           >
             <Input />
           </Form.Item>

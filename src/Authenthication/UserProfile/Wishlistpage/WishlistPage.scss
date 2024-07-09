@@ -79,7 +79,18 @@ h1 {
     }
   }
 }
+.loading-container,
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.no-item-details {
+  width: 100%;
+  text-align: center;
+}
 @media (max-width: 768px) {
   .wishlist-item {
     flex-direction: column;

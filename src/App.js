@@ -20,6 +20,7 @@ import Order from "./Authenthication/UserProfile/MYOrder/OrderPage";
 import OrderDetailPage from "./Authenthication/UserProfile/OrderDetail/OrderDetail.jsx";
 import WishlistPage from "./Authenthication/UserProfile/Wishlistpage/Wishlistpage.jsx";
 import PasswordReset from "./Authenthication/Reset_Password/PasswordReset/PasswordReset.jsx";
+import VerifyOtp from "./Authenthication/Reset_Password/VerifyOtp/VerifyOtp.jsx";
 function App() {
   return (
     <Router>
@@ -41,7 +42,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/reset" element={<ResetPassword />} />
-          <Route path="/reset-password/verify-token/:userId/:token" element={<PasswordReset />} />
+          <Route path="/verify" element={<VerifyOtp />} />
+          <Route path="/new-password" element={<PasswordReset />} />
           <Route path="/login" element={<Login />} />
         </Route>
       </Routes>

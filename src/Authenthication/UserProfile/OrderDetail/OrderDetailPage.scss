@@ -1,132 +1,138 @@
-// Variables for consistent styling
-$primary-color: #1890ff;
-$secondary-color: #f0f2f5;
-$highlight-color: #ff4d4f;
-$font-family: 'Arial, sans-serif';
-$border-radius: 8px;
-$spacing-unit: 16px;
+.order-detail {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial, sans-serif';
 
-.order-detail-page {
-  font-family: $font-family;
-  padding: $spacing-unit;
-  background-color: $secondary-color;
+  &__title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #1890ff;
+    font-weight: 600;
+  }
 
-  .order-container {
-    background: white;
-    border-radius: $border-radius;
-    padding: $spacing-unit;
+  &__descriptions {
+    margin-bottom: 20px;
+
+    .ant-descriptions-header {
+      background-color: #fafafa;
+      padding: 8px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .ant-descriptions-view {
+      background-color: #fff;
+      padding: 16px;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ant-descriptions-item-label {
+      font-weight: 500;
+      color: #595959;
+    }
+
+    .ant-descriptions-item-content {
+      color: #000;
+    }
+  }
+
+  &__steps {
+    margin-bottom: 20px;
+
+    .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+      background-color: #1890ff;
+    }
+
+    .ant-steps-item.completed-step .ant-steps-item-icon > .ant-steps-icon {
+      background-color: #1890ff;
+      border-color: #1890ff;
+    }
+
+    .ant-steps-item.completed-step .ant-steps-item-title {
+      color: #1890ff;
+    }
+
+    .ant-steps-item.completed-step .ant-steps-item-description {
+      color: #595959;
+    }
+
+    .ant-steps-item.completed-step .ant-steps-item-tail::after {
+      background-color: #1890ff;
+    }
+  }
+
+  &__items-title {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #1890ff;
+    font-weight: 600;
+  }
+
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .order-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    background: #fafafa;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 
-    .order-header {
-      // display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid $secondary-color;
-      padding-bottom: $spacing-unit;
-      margin-bottom: $spacing-unit;
-
-      .order-info-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        // flex-direction: column;
-        
-        .order-info {
-          h2 {
-            color: $primary-color;
-            margin: 0;
-          }
-
-          p {
-            margin: 0;
-            color: #555;
-          }
-        }
-      }
-
-      p {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin: 0;
-      }
+    &:hover {
+      transform: scale(1.02);
     }
 
-    .timeline {
+    &__image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #f0f0f0;
+    }
+
+    &__details {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: $spacing-unit;
-      
-      .status {
-        text-align: center;
-
-        &.active .status-dot {
-          background-color: $primary-color;
-        }
-
-        .status-dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background-color: #ccc;
-          margin: 0 auto $spacing-unit;
-        }
-
-        .status-label {
-          font-size: 0.9rem;
-          color: #555;
-        }
-      }
+      flex-direction: column;
+      gap: 5px;
     }
 
-    .verification-msg {
-      background-color: #e6f7ff;
-      border-left: 4px solid $primary-color;
-      padding: $spacing-unit;
-      margin-bottom: $spacing-unit;
-      font-size: 0.9rem;
-      color: $primary-color;
+    &__name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
     }
 
-    .product-detail {
-      h3 {
-        color: $primary-color;
-        margin-bottom: $spacing-unit;
-      }
+    &__detail {
+      font-size: 14px;
+      color: #595959;
+    }
+  }
 
-      .product-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid $secondary-color;
-        padding: $spacing-unit 0;
+  &__back-button {
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #1890ff;
+    border-color: #1890ff;
 
-        &:last-child {
-          border-bottom: none;
-        }
-
-        .product-image {
-          width: 80px;
-          height: 80px;
-          object-fit: cover;
-          border-radius: $border-radius;
-          margin-right: $spacing-unit;
-        }
-
-        p {
-          margin: 0;
-          color: #555;
-        }
-
-        .delete-icon {
-          font-size: 1.2rem;
-          color: $highlight-color;
-          cursor: pointer;
-
-          &:hover {
-            color: darken($highlight-color, 10%);
-          }
-        }
-      }
+    &:hover {
+      background: #40a9ff;
+      border-color: #40a9ff;
     }
   }
 }

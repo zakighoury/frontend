@@ -1,45 +1,111 @@
-/* Cart.scss */
-
 .cart-container {
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    margin-bottom: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-images {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.cart-item-details {
+  flex: 1;
+  min-width: 200px;
+}
+
+.cart-item-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.cart-item-titles {
+  font-size: 1em;
+  color: #666;
+}
+
+.cart-item-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cart-edit-button,
+.cart-delete-button {
+  background-color: #1890ff;
+  border: none;
+  color: #fff;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #40a9ff;
   }
-  
+}
+
+.cart-delete-button {
+  background-color: #ff4d4f;
+
+  &:hover {
+    background-color: #ff7875;
+  }
+}
+
+@media (max-width: 768px) {
   .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
   .cart-item-images {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    margin-right: 20px;
-  }
-  
-  .cart-item-details {
-    flex-grow: 1;
-  }
-  
-  .cart-item-titles {
+    margin-right: 0;
     margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
   }
-  
+
   .cart-item-actions {
-    margin-top: 10px;
+    justify-content: flex-start;
+    width: 100%;
   }
-  
-  .cart-edit-button,
-  .cart-delete-button {
-    margin-right: 10px;
+}
+
+.cart-edit-modal {
+  .ant-modal-header {
+    background-color: #1890ff;
+    color: #fff;
   }
-  
-  .cart-edit-modal {
-    max-width: 500px;
+
+  .ant-modal-title {
+    color: #fff;
   }
-  
+
+  .ant-modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+
+    &:hover {
+      background-color: #40a9ff;
+      border-color: #40a9ff;
+    }
+  }
+}

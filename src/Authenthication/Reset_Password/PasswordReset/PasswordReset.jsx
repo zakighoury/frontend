@@ -1,41 +1,42 @@
+// NewPassword.js
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const PasswordReset = () => {
-  const [form] = Form.useForm();
+const NewPassword = () => {
   const [loading, setLoading] = useState(false);
-  const { userId, token } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { token } = location.state;
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:5002/reset-password/verify-token/${userId}/${token}`, values);
-      if (response.data.success) {
-        message.success(response.data.message);
-        form.resetFields();
-      } else {
-        message.error(response.data.message);
-      }
+      await axios.post(`http://localhost:5002/reset-password/new-password`, {
+        newPassword: values.newPassword,
+        token,
+      });
+      message.success('Password reset successfully');
+      navigate('/login'); // Redirect to login page
     } catch (error) {
-      console.error('Error:', error);
-      message.error('Server error');
+      message.error(error.response?.data?.message || 'Failed to reset password');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <div className="reset-password-container">
-      <h2 className="reset-password-heading">Reset Password</h2>
-      <Form form={form} name="resetPassword" onFinish={onFinish}>
+    <div className="new-password-container">
+      <h2 className="new-password-heading">Set New Password</h2>
+      <Form onFinish={onFinish} layout="vertical">
         <Form.Item
+          label="New Password"
           name="newPassword"
-          rules={[{ required: true, message: 'Please input your new password!' }]}
+          rules={[{ required: true, message: 'Please enter your new password' }]}
         >
-          <Input.Password placeholder="New Password" />
+          <Input.Password />
         </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             Reset Password
@@ -46,4 +47,4 @@ const PasswordReset = () => {
   );
 };
 
-export default PasswordReset;
+export default NewPassword;

@@ -25,7 +25,7 @@ const Big_Saving_zone = () => {
               <h3>Hawaiian Shirt</h3>
               <p>Dress up in summer vibe</p>
               <p>Upto 50% off</p>
-              <DownloadOutlined />
+              <DownloadOutlined  />
               <button>Shop Now</button>
             </div>
           </div>

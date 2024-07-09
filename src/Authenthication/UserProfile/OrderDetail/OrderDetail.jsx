@@ -1,37 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { message, Tag, Modal } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
-import "./OrderDetailPage.scss"; // Import SCSS file
+import { Descriptions, Button, Steps, message } from "antd";
+import "./OrderDetailPage.scss";
 
-function OrderDetailPage() {
+const { Step } = Steps;
+
+const OrderDetail = () => {
   const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const userId = Cookies.get("userId");
-  const orderId = Cookies.get("orderId");
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5002/api/orders/${userId}/${orderId}`);
-        setOrder(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching order:", error);
-        message.error("Failed to fetch order");
-        setLoading(false);
-      }
-    };
+  const orderStatuses = [
+    "Order Placed",
+    "InProgress",
+    "Shipped",
+    "Delivered",
+  ];
 
-    fetchOrder();
-  }, [userId, orderId]);
-
-  const getOrderStatusIndex = (orderStatus) => {
-    switch (orderStatus) {
+  const getOrderStatusIndex = (status) => {
+    switch (status) {
       case "Order Placed":
         return 0;
-      case "inProgress":
+      case "In Progress":
         return 1;
       case "Shipped":
         return 2;
@@ -42,85 +31,112 @@ function OrderDetailPage() {
     }
   };
 
-  const statuses = ["Order Placed", "inProgress", "Shipped", "Delivered"];
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const userId = Cookies.get("userId");
+        const orderId = Cookies.get("orderId");
+        const response = await axios.get(
+          `http://localhost:5002/api/orders/${userId}/${orderId}`
+        );
+        setOrder(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching order details:", error);
+        message.error("Failed to fetch order details");
+      }
+    };
 
-  const handleDeleteProduct = (productId) => {
-    Modal.confirm({
-      title: "Are you sure you want to delete this product?",
-      onOk: async () => {
-        try {
-          const response = await axios.delete(`http://localhost:5002/${orderId}/products/${productId}`);
-          if (response.status === 200) {
-            setOrder({
-              ...order,
-              cartItems: order.cartItems.filter(item => item._id !== productId),
-            });
-            message.success("Product deleted successfully");
-          } else {
-            message.error("Failed to delete product");
-          }
-        } catch (error) {
-          console.error("Error deleting product:", error);
-          message.error("Error deleting product");
-        }
-      },
-      okText: "Yes",
-      cancelText: "No",
-    });
-  };
+    fetchOrder();
+  }, []);
+
+  if (!order) {
+    return <p>Loading...</p>;
+  }
+
+  const currentStatusIndex = getOrderStatusIndex(order.orderStatus);
 
   return (
-    <div className="order-detail-page">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        order && (
-          <div className="order-container">
-            <div className="order-header">
-              <div className="order-info-container">
-                <div className="order-info">
-                  <h2>Order Number: {order.orderNumber}</h2>
-                  <p>Estimated Delivery Date: {new Date(order.estimatedDeliveryDate).toLocaleString()}</p>
-                </div>
-                <div className="order-total">
-                <p>Total: ${order.grandTotal.toFixed(2)}</p>
-                </div>
-              </div>
+    <div className="order-detail">
+      <h2 className="order-detail__title">Order Detail</h2>
+      <Descriptions bordered className="order-detail__descriptions">
+        <Descriptions.Item label="Order Number">
+          {order.OrderNumber}
+        </Descriptions.Item>
+      </Descriptions>
+      <div className="order-detail__steps">
+        <Steps current={currentStatusIndex} size="small">
+          {orderStatuses.map((status, index) => (
+            <Step
+              key={index}
+              title={status}
+              status={
+                currentStatusIndex === index
+                  ? "process"
+                  : currentStatusIndex > index
+                  ? "finish"
+                  : "wait"
+              }
+              className={currentStatusIndex >= index ? "completed-step" : ""}
+            />
+          ))}
+        </Steps>
+      </div>
+      <Descriptions bordered className="order-detail__descriptions">
+        <Descriptions.Item label="Order Date">
+          {new Date(order.orderDate).toLocaleString()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Estimated Delivery Date">
+          {new Date(order.estimatedDeliveryDate).toLocaleString()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Payment Method">
+          {order.payment.cardType}
+        </Descriptions.Item>
+        <Descriptions.Item label="Shipping Address" span={2}>
+          {order.shipping_address.address_line_1},{" "}
+          {order.shipping_address.address_line_2},{" "}
+          {order.shipping_address.city}, {order.shipping_address.state},{" "}
+          {order.shipping_address.country}, {order.shipping_address.pincode}
+        </Descriptions.Item>
+        <Descriptions.Item label="Billing Address" span={2}>
+          {order.billing_address.name}, {order.billing_address.email},{" "}
+          {order.billing_address.address_line_1},{" "}
+          {order.billing_address.address_line_2}, {order.billing_address.city},{" "}
+          {order.billing_address.state}, {order.billing_address.country},{" "}
+          {order.billing_address.pincode}
+        </Descriptions.Item>
+      </Descriptions>
+
+      <h3 className="order-detail__items-title">Order Items</h3>
+      <div className="order-items">
+        {order.cartItems.map((item) => (
+          <div key={item._id} className="order-item">
+            <img
+              src={item.productDetails.ImgUrl}
+              alt={item.productDetails.name}
+              className="order-item__image"
+            />
+            <div className="order-item__details">
+              <h4 className="order-item__name">{item.productDetails.name}</h4>
+              <p className="order-item__detail">Color: {item.productDetails.color}</p>
+              <p className="order-item__detail">Size: {item.productDetails.size}</p>
+              <p className="order-item__detail">Quantity: {item.quantity}</p>
+              <p className="order-item__detail">Price: ${item.productDetails.price.toFixed(2)}</p>
+              <p className="order-item__detail">Total: ${(item.productDetails.price * item.quantity).toFixed(2)}</p>
             </div>
-            <div className="timeline">
-              {statuses.map((status, index) => (
-                <div key={index} className={`status ${index <= getOrderStatusIndex(order.orderStatus) ? 'active' : ''}`}>
-                  <div className="status-dot"></div>
-                  <div className="status-label">{status}</div>
-                </div>
-              ))}
-            </div>
-            {order.orderStatus === "inProgress" && (
-              <p className="verification-msg">You have successfully verified the product detail.</p>
-            )}
-            <div className="product-detail">
-              <h3>Product Detail:</h3>
-              {order.cartItems.map((item) => (
-                <div key={item._id} className="product-item">
-                  <img src={item.productDetails.ImgUrl} alt="" className="product-image" />
-                  <p> {item.productDetails.name}</p>
-                  <p>Color: {item.productDetails.color}</p>
-                  <p>Qty: {item.quantity}</p>
-                  <p> ${item.productDetails.price.toFixed(2)}</p>
-                  <CloseCircleOutlined 
-                    className="delete-icon" 
-                    onClick={() => handleDeleteProduct(item._id)} 
-                    title="Delete Product"
-                  />
-                </div>
-              ))}
-            </div>
-            <hr />
           </div>
-        )
-      )}
+        ))}
+      </div>
+
+      <Button
+        type="primary"
+        onClick={() => window.history.back()}
+        className="order-detail__back-button"
+      >
+        Back
+      </Button>
     </div>
   );
-}
+};
 
-export default OrderDetailPage;
+export default OrderDetail;

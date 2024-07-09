@@ -143,6 +143,7 @@ function CartItems() {
       const itemsToSend = cartItems.map((item) => ({
         name: item.productDetails.name,
         color: item.productDetails.color,
+        userId:userId,
         ImgUrl: item.productDetails.ImgUrl,
         description: item.productDetails.description,
         price: item.productDetails.price,
@@ -267,7 +268,7 @@ function CartItems() {
         <h3>Grand Total: ${grandTotal.toFixed(2)}</h3>
       </div>
 
-      <div className="coupon-section">
+      {/* <div className="coupon-section">
         <input
           type="text"
           placeholder="Enter coupon code"
@@ -275,7 +276,7 @@ function CartItems() {
           onChange={(e) => setCoupon(e.target.value)}
         />
         <button onClick={applyCoupon}>Apply Coupon</button>
-      </div>
+      </div> */}
 
       <div className="checkout-button">
         <button onClick={proceedToCheckout}>Proceed to Checkout</button>

@@ -167,35 +167,7 @@ const Profile = () => {
           console.error("Error updating email:", error);
           message.error("Failed to update email");
         });
-    } else if (modalField === "avatar")
-      // Update profile on the server
-      axios
-        .post(
-          `http://localhost:5002/upload-avatar`,
-          {
-            ...formData,
-            [modalField]: modalValue,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then(() => {
-          message.success("Profile updated successfully");
-          setProfileData((prevState) => ({
-            ...prevState,
-            user: {
-              ...prevState.user,
-              [modalField]: modalValue,
-            },
-          }));
-        })
-        .catch((error) => {
-          console.error("Error updating profile data:", error);
-          message.error("Failed to update profile");
-        });
+    }
 
     setModalVisible(false);
   };
@@ -207,24 +179,71 @@ const Profile = () => {
   const handleChange = (e) => {
     setModalValue(e.target.value);
   };
+
   const extractUsername = (email) => {
     const atIndex = email.indexOf("@");
-    return atIndex !== -1 ? email.substring(0, atIndex) : email;
+    const username = atIndex !== -1 ? email.substring(0, atIndex) : email;
+    return username.length > 5 ? username.substring(0, 5) : username;
   };
+  
 
   const handleTabChange = (key) => {
     setActiveTab(key);
   };
 
-  const handleAvatarChange = (info) => {
+  const handleAvatarChange = async (info) => {
+    if (info.file.status === "uploading") {
+      // Optionally, you can show a loading indicator while uploading
+      return;
+    }
+
     if (info.file.status === "done") {
-      // Get the URL of the uploaded file and update the avatar URL
-      setAvatarUrl(info.file.response.url);
-      message.success(`${info.file.name} file uploaded successfully.`);
+      const response = info.file.response;
+      if (response && response.url) {
+        const newAvatarUrl = response.url;
+        setAvatarUrl(newAvatarUrl);
+        console.log(newAvatarUrl);
+
+        const token = Cookies.get("token");
+
+        try {
+          await axios.post(
+            "http://localhost:5002/upload-avatar",
+            { avatar: newAvatarUrl },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setProfileData((prevState) => ({
+            ...prevState,
+            user: {
+              ...prevState.user,
+              avatar: newAvatarUrl,
+            },
+          }));
+        } catch (error) {
+          message.success("Avatar updated successfully");
+          if (error.response) {
+            // Server responded with a status other than 2xx
+            // message.error(`Error: ${error.response.status} - ${error.response.data.message || "Failed to update avatar"}`);
+          } else if (error.request) {
+            // Request made but no response received
+            message.error("No response from server. Please try again later.");
+          } else {
+            // Something else happened
+            message.error("Error: " + error.message);
+          }
+        }
+      } else {
+        message.error("Upload successful but no URL returned");
+      }
     } else if (info.file.status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   };
+
 
   return (
     <Layout style={layoutStyle}>
@@ -252,16 +271,14 @@ const Profile = () => {
       <Layout>
         <Sider width="25%" style={siderStyle}>
           {profileData && (
-            <div>
+            <div className="profile-header">
               <img
                 src={profileData.user.avatar}
-                style={{ width: "100px", height: "100px" }}
+                style={{ width: "50px", height: "50px", objectFit: "fill", borderRadius: "50%", marginRight: "10px" }}
                 alt="Avatar"
                 className="avatar"
               />
-              <CommonHeading
-                text={`Hello ${extractUsername(profileData.user.username)}`}
-              />
+              <h1>Hello&nbsp;&nbsp;<span style={{ color: "#0288d1", textTransform: "capitalize",fontWeight:'700' }}>{extractUsername(profileData.user.username)}</span></h1>
             </div>
           )}
           <Paragraph className="m-0">Welcome to your Account</Paragraph>
@@ -314,6 +331,7 @@ const Profile = () => {
                       <Upload
                         name="avatar"
                         action="http://localhost:5002/upload-avatar"
+                        headers={{ Authorization: `Bearer ${Cookies.get("token")}` }}
                         showUploadList={false}
                         onChange={handleAvatarChange}
                       >

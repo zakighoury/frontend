@@ -20,7 +20,6 @@ const Wishlist = () => {
           `http://localhost:5002/api/wishlist/${userId}`
         );
         setWishlistItems(response.data);
-        // message.success("Wishlist fetched successfully!");
       } catch (error) {
         setError(error.message);
       } finally {
@@ -68,7 +67,6 @@ const Wishlist = () => {
 
       if (response.status === 200) {
         message.success('Item added to cart successfully!');
-        // navigate to cart or update cart state here if needed
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -94,27 +92,33 @@ const Wishlist = () => {
               className="delete-icon"
               onClick={() => handleRemoveFromWishlist(item._id)}
             />
-            <img
-              src={item.CartItem[0].ImgUrl}
-              alt={item.CartItem[0].name}
-              className="item-image"
-            />
-            <div className="item-details">
-              <h2 className="item-name">{item.CartItem[0].name}</h2>
-              <p>Color: {item.CartItem[0].color}</p>
-              <p>Qty: {item.CartItem[0].quantity}</p>
-            </div>
-            <div className="item-price-container">
-              <p className="item-price">${item.CartItem[0].price}.00</p>
-            </div>
-            <div className="item-actions">
-              <button
-                className="add-to-cart"
-                onClick={() => handleAddToCart(item.CartItem[0])}
-              >
-                <ShoppingCartOutlined /> Add to Cart
-              </button>
-            </div>
+            {item.CartItem && item.CartItem[0] ? (
+              <>
+                <img
+                  src={item.CartItem[0].ImgUrl}
+                  alt={item.CartItem[0].name}
+                  className="item-image"
+                />
+                <div className="item-details">
+                  <h2 className="item-name">{item.CartItem[0].name}</h2>
+                  <p>Color: {item.CartItem[0].color}</p>
+                  <p>Qty: {item.CartItem[0].quantity}</p>
+                </div>
+                <div className="item-price-container">
+                  <p className="item-price">${item.CartItem[0].price}.00</p>
+                </div>
+                <div className="item-actions">
+                  <button
+                    className="add-to-cart"
+                    onClick={() => handleAddToCart(item.CartItem[0])}
+                  >
+                    <ShoppingCartOutlined /> Add to Cart
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div>No item details available</div>
+            )}
           </li>
         ))}
       </ul>

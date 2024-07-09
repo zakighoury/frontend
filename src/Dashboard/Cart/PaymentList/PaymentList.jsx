@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Collapse, Button, Modal } from "antd";
-import OrderForm from "../OrderCheck/OrderCheck";
+import { Collapse } from "antd";
 import "./PaymentList.scss";
 const { Panel } = Collapse;
 
 const PaymentList = () => {
   const [payments, setPayments] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedPayment, setSelectedPayment] = useState(null);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -25,22 +21,8 @@ const PaymentList = () => {
       }
     };
 
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.post("http://localhost:5002/cartitems");
-        const cartItemsData = response.data.cartItems || [];
-        setCartItems(cartItemsData);
-        console.log(cartItemsData);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-        setCartItems([]);
-      }
-    };
-
     fetchPayments();
-    fetchCartItems();
   }, []);
-
 
   const showModal = (url) => {
     const width = 800;
@@ -52,32 +34,6 @@ const PaymentList = () => {
       "Receipt",
       `width=${width},height=${height},top=${top},left=${left}`
     );
-  };
-
-  const handleUpdatePayment = async (values) => {
-    if (selectedPayment) {
-      const { amount, currency, ...updateValues } = values; // Exclude amount and currency
-
-      try {
-        const response = await axios.put(
-          `http://localhost:5002/payment-intents/${selectedPayment.id}`,
-          updateValues
-        );
-        if (response.status === 200) {
-          setPayments((prevPayments) =>
-            prevPayments.map((payment) =>
-              payment.id === selectedPayment.id
-                ? { ...payment, ...updateValues }
-                : payment
-            )
-          );
-          setSelectedPayment(null);
-          setIsModalVisible(false);
-        }
-      } catch (error) {
-        console.error("Error updating payment intent:", error);
-      }
-    }
   };
 
   return (
@@ -121,24 +77,6 @@ const PaymentList = () => {
                     View Receipt
                   </a>
                   <br />
-                  {cartItems.length > 0 ? (
-                    cartItems.map((item, index) => (
-                      <li key={index}>
-                        Product Name: {item.product.name}, Quantity:{" "}
-                        {item.quantity}
-                      </li>
-                    ))
-                  ) : (
-                    <li>No cart items found.</li>
-                  )}
-                  <Button
-                    onClick={() => {
-                      setSelectedPayment(payment);
-                      setIsModalVisible(true);
-                    }}
-                  >
-                    Create Order
-                  </Button>
                 </Panel>
               </Collapse>
             );
@@ -147,14 +85,6 @@ const PaymentList = () => {
           <li>No payment intents found.</li>
         )}
       </ul>
-      <Modal
-        title="Create Order"
-        visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={null}
-      >
-        {selectedPayment && <OrderForm payment={selectedPayment} />}
-      </Modal>
     </div>
   );
 };
